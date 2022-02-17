@@ -1,0 +1,77 @@
+-- 1) Move all Oakville customers to Newmarket with a new postal code of L3XOA4.
+UPDATE CUSTOMER
+SET CITY = 'Newmarket'
+WHERE CITY = 'Oakville'; --update data
+
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'L3XOA4'
+WHERE CITY = 'Newmarket'; --update data
+
+SELECT * FROM CUSTOMER;
+
+-- 2) Demonstrate the ON DELETE SET NULL foreign key option with CUSTOMER and SALESREP.
+--      a)make copy of the tables
+CREATE TABLE CUSTOMERB AS (SELECT * FROM CUSTOMER); --CREATE TABLE CUSTOMERB
+CREATE TABLE SALESREPB AS (SELECT * FROM SALESREP); --CREATE TABLE SALESREPB
+
+--      b)setup appropriate constraints
+ALTER TABLE SALESREPB
+    ADD CONSTRAINT SALESREPB_SALES_REP_NUMBER_PK
+    PRIMARY KEY (SALES_REP_NUMBER);
+
+ALTER TABLE CUSTOMERB
+    ADD CONSTRAINT CUSTOMERB_SALES_REP_NUMBER_FK
+    FOREIGN KEY (SALES_REP_NUMBER)
+    REFERENCES SALESREPB(SALES_REP_NUMBER)
+    ON DELETE SET NULL; --child data is set to null when parent data is deleted
+
+--      c)contents of both tables
+SELECT * FROM CUSTOMERB;
+SELECT * FROM SALESREPB;
+
+--      d)trigger on delete set null
+ALTER TABLE CUSTOMERB MODIFY (SALES_REP_NUMBER null); --Remove not null constraint from the SALES_REP_NUMBER column
+DELETE FROM SALESREPB
+    WHERE SALES_REP_NUMBER = '06'; 
+    
+--      e)contents of both tables
+SELECT * FROM CUSTOMERB;
+SELECT * FROM SALESREPB;
+    
+-- 3) Demonstrate the ON DELETE CASCADE foreign key option with CUSTOMER and SALESREP. 
+--      a) make a copy of these tables
+CREATE TABLE CUSTOMERC AS (SELECT * FROM CUSTOMER); --CREATE TABLE CUSTOMERC
+CREATE TABLE SALESREPC AS (SELECT * FROM SALESREP); --CREATE TABLE SALESREPC
+
+--      b)set up the appropriate constraints
+ALTER TABLE SALESREPC
+    ADD CONSTRAINT SALESREPC_SALES_REP_NUMBER_PK
+    PRIMARY KEY (SALES_REP_NUMBER);
+
+ALTER TABLE CUSTOMERC
+    ADD CONSTRAINT CUSTOMERC_SALES_REP_NUMBER_FK
+    FOREIGN KEY (SALES_REP_NUMBER)
+    REFERENCES SALESREPC(SALES_REP_NUMBER)
+    ON DELETE CASCADE; --child data is deleted when parent data is deleted
+
+--      c)show contents of both tables
+SELECT * FROM CUSTOMERC;
+SELECT * FROM SALESREPC;
+    
+--      d)trigger on delete cascade
+DELETE FROM SALESREPC
+    WHERE SALES_REP_NUMBER = '03'; 
+    
+--      e)show contents of both tables
+SELECT * FROM CUSTOMERC;
+SELECT * FROM SALESREPC;
+
+-- 4) Show all the cities in CUSTOMER without repeating any city name.
+SELECT UNIQUE(CITY) FROM CUSTOMER
+ORDER BY CITY;
+
+-- 5) Dropping tables
+DROP TABLE CUSTOMERB;
+DROP TABLE SALESREPB;
+DROP TABLE CUSTOMERC;
+DROP TABLE SALESREPC;

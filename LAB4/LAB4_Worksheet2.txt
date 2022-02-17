@@ -1,0 +1,44 @@
+--Toronto
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'M4W3E6'
+WHERE CITY = 'Toronto'; --update data
+
+UPDATE SALESREP
+SET POSTAL_CODE = 'M4W3E6'
+WHERE CITY = 'Toronto'; --update data
+
+--Oakville
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'L4X1L9'
+WHERE CITY = 'Oakville'; --update data
+
+UPDATE SALESREP
+SET POSTAL_CODE = 'L4X1L9'
+WHERE CITY = 'Oakville'; --update data
+
+--Hamilton
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'L7R3X5'
+WHERE CITY = 'Hamilton'; --update data
+
+UPDATE SALESREP
+SET POSTAL_CODE = 'L7R3X5'
+WHERE CITY = 'Hamilton'; --update data
+
+--Mississauga
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'L4T1A3'
+WHERE CITY = 'Mississauga'; --update data
+
+UPDATE SALESREP
+SET POSTAL_CODE = 'L4T1A3'
+WHERE CITY = 'Mississauga'; --update data
+
+--London
+UPDATE CUSTOMER
+SET POSTAL_CODE = 'N5V0B1'
+WHERE CITY = 'London'; --update data
+
+UPDATE SALESREP
+SET POSTAL_CODE = 'N5V0B1'
+WHERE CITY = 'London'; --update data
